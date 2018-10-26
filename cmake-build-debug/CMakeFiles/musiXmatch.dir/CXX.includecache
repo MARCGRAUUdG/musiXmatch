@@ -1,0 +1,36 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.cpp
+Song.h
+C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.h
+
+C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.h
+iostream
+-
+list
+-
+
+C:/Users/Marc Grau/CLionProjects/musiXmatch/Songs.cpp
+Songs.h
+C:/Users/Marc Grau/CLionProjects/musiXmatch/Songs.h
+
+C:/Users/Marc Grau/CLionProjects/musiXmatch/Songs.h
+iostream
+-
+memory
+-
+set
+-
+Song.h
+C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.h
+
+C:/Users/Marc Grau/CLionProjects/musiXmatch/main.cpp
+iostream
+-
+
