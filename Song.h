@@ -6,18 +6,26 @@
 #define MUSIXMATCH_SONG_H
 
 #include <iostream>
+#include <set>
 #include <list>
+#include <cctype>
+#include <map>
 
 class Song { //A song from the musiXmatch dataset
 
     typedef unsigned short ushort;
-
+public:
+    Song();
     Song(const std::string tid,
             const std::string MSD_artist_name,
             const std::string MSD_title,
             const std::string mXm_tid,
             const std::string mXm_artist_name,
             const std::string mXm_title);
+
+    void show();
+    //Pre: --
+    //Post: print the attributes of the class.
 
     void addWord( ushort idx, ushort cnt);
     //Pre: There is no word with index idx in this song.
@@ -33,7 +41,15 @@ class Song { //A song from the musiXmatch dataset
 
 private:
 
+    std::string tid_MSD; ///id de la Song corresponent al MSD
+    std::string name_MSD; ///nom de la Song corresponent al MSD
+    std::string title_MSD; ///títol de la Song corresponent al MSD
 
+    std::string tid_mXm; ///id de la Song corresponent al mXm
+    std::string name_mXm; ///nom de la Song corresponent al mXm
+    std::string title_mXm; /// títol de la Song corresponent al mXm
+
+    std::map<ushort, ushort> words_MAP; ///map on es guarda un índex i un comptador
 };
 
 

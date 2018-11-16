@@ -8,10 +8,14 @@
 #include <iostream>
 #include <memory>
 #include <set>
+#include <map>
+#include <vector>
 
 #include "Song.h"
 
 class Songs {//A set of songs, indexed by the both tid and mXm_tid, and a list of words
+
+public:
 
     typedef unsigned short ushort;
 
@@ -49,6 +53,9 @@ class Songs {//A set of songs, indexed by the both tid and mXm_tid, and a list o
     // Post: the song with (tid == id) or (mXm_tid == id) in this set has been deleted; says if it succeeded
 
 private:
+
+    std::map<std::pair<std::string, std::string>, Song> _song;
+    std::vector<std::string> frequentWords;
 
 };
 
