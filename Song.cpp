@@ -81,5 +81,45 @@ void Song::show() {
     }
 }
 
+const std::string &Song::getTid_MSD() const {
+    return tid_MSD;
+}
+
+const std::string &Song::getName_MSD() const {
+    return name_MSD;
+}
+
+const std::string &Song::getTitle_MSD() const {
+    return title_MSD;
+}
+
+const std::string &Song::getTid_mXm() const {
+    return tid_mXm;
+}
+
+const std::string &Song::getName_mXm() const {
+    return name_mXm;
+}
+
+const std::string &Song::getTitle_mXm() const {
+    return title_mXm;
+}
+
+void Song::setName_MSD(const std::string &name_MSD) {
+    Song::name_MSD = name_MSD;
+}
+
+void Song::setTitle_MSD(const std::string &title_MSD) {
+    Song::title_MSD = title_MSD;
+}
+
+void Song::setName_mXm(const std::string &name_mXm) {
+    Song::name_mXm = name_mXm;
+}
+
+void Song::setTitle_mXm(const std::string &title_mXm) {
+    Song::title_mXm = title_mXm;
+}
+
 
 

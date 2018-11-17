@@ -8,5 +8,7 @@ CMakeFiles/musiXmatch.dir/Songs.cpp.obj: ../Song.h
 CMakeFiles/musiXmatch.dir/Songs.cpp.obj: ../Songs.cpp
 CMakeFiles/musiXmatch.dir/Songs.cpp.obj: ../Songs.h
 
+CMakeFiles/musiXmatch.dir/main.cpp.obj: ../Song.h
+CMakeFiles/musiXmatch.dir/main.cpp.obj: ../Songs.h
 CMakeFiles/musiXmatch.dir/main.cpp.obj: ../main.cpp
 
