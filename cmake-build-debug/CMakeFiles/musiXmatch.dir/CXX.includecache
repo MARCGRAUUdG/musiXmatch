@@ -6,13 +6,7 @@
 
 #IncludeRegexTransform: 
 
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.cpp
-algorithm
--
-Song.h
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.h
-
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.h
+/home/marc/CLionProjects/musiXmatch/Song.h
 iostream
 -
 set
@@ -24,11 +18,7 @@ cctype
 map
 -
 
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Songs.cpp
-Songs.h
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Songs.h
-
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Songs.h
+/home/marc/CLionProjects/musiXmatch/Songs.h
 iostream
 -
 memory
@@ -40,9 +30,9 @@ map
 vector
 -
 Song.h
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.h
+/home/marc/CLionProjects/musiXmatch/Song.h
 
-C:/Users/Marc Grau/CLionProjects/musiXmatch/main.cpp
+/home/marc/CLionProjects/musiXmatch/main.cpp
 iostream
 -
 map
@@ -56,7 +46,7 @@ string
 fstream
 -
 Song.h
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.h
+/home/marc/CLionProjects/musiXmatch/Song.h
 Songs.h
-C:/Users/Marc Grau/CLionProjects/musiXmatch/Songs.h
+/home/marc/CLionProjects/musiXmatch/Songs.h
 

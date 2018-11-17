@@ -1,3 +1,1 @@
-"C:\Program Files\JetBrains\CLion 2018.2.4\bin\cmake\win\bin\cmake.exe" -E remove -f CMakeFiles\musiXmatch.dir/objects.a
-C:\MinGW\bin\ar.exe cr CMakeFiles\musiXmatch.dir/objects.a @CMakeFiles\musiXmatch.dir\objects1.rsp
-C:\MinGW\bin\g++.exe -g   -Wl,--whole-archive CMakeFiles\musiXmatch.dir/objects.a -Wl,--no-whole-archive  -o musiXmatch.exe -Wl,--out-implib,libmusiXmatch.dll.a -Wl,--major-image-version,0,--minor-image-version,0 @CMakeFiles\musiXmatch.dir\linklibs.rsp
+/usr/bin/c++  -g   CMakeFiles/musiXmatch.dir/main.cpp.o CMakeFiles/musiXmatch.dir/Song.cpp.o CMakeFiles/musiXmatch.dir/Songs.cpp.o  -o musiXmatch 

@@ -28,13 +28,6 @@ Song::Song(const std::string tid, const std::string MSD_artist_name, const std::
 
 void Song::addWord(Song::ushort idx, Song::ushort cnt) {
     words_MAP.insert(std::pair<ushort, ushort> (idx, cnt));
-    std::cout << "Sha inserit a la pos " << idx << " el valor " << cnt << std::endl;
-    std::cout << "Llista: " << std::endl;
-    for (auto& word : words_MAP)
-    {
-        std::cout << "(" << word.first << "-" << word.second << ") ";
-    }
-    std::cout << std::endl;
 }
 
 Song::ushort Song::count(Song::ushort idx) const {

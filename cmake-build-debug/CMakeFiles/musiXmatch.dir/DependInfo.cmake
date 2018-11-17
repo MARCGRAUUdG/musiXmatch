@@ -4,9 +4,9 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "C:/Users/Marc Grau/CLionProjects/musiXmatch/Song.cpp" "C:/Users/Marc Grau/CLionProjects/musiXmatch/cmake-build-debug/CMakeFiles/musiXmatch.dir/Song.cpp.obj"
-  "C:/Users/Marc Grau/CLionProjects/musiXmatch/Songs.cpp" "C:/Users/Marc Grau/CLionProjects/musiXmatch/cmake-build-debug/CMakeFiles/musiXmatch.dir/Songs.cpp.obj"
-  "C:/Users/Marc Grau/CLionProjects/musiXmatch/main.cpp" "C:/Users/Marc Grau/CLionProjects/musiXmatch/cmake-build-debug/CMakeFiles/musiXmatch.dir/main.cpp.obj"
+  "/home/marc/CLionProjects/musiXmatch/Song.cpp" "/home/marc/CLionProjects/musiXmatch/cmake-build-debug/CMakeFiles/musiXmatch.dir/Song.cpp.o"
+  "/home/marc/CLionProjects/musiXmatch/Songs.cpp" "/home/marc/CLionProjects/musiXmatch/cmake-build-debug/CMakeFiles/musiXmatch.dir/Songs.cpp.o"
+  "/home/marc/CLionProjects/musiXmatch/main.cpp" "/home/marc/CLionProjects/musiXmatch/cmake-build-debug/CMakeFiles/musiXmatch.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 

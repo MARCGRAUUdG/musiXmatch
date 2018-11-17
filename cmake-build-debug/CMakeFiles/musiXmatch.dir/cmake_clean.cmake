@@ -1,11 +1,9 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/musiXmatch.dir/main.cpp.obj"
-  "CMakeFiles/musiXmatch.dir/Song.cpp.obj"
-  "CMakeFiles/musiXmatch.dir/Songs.cpp.obj"
+  "CMakeFiles/musiXmatch.dir/main.cpp.o"
+  "CMakeFiles/musiXmatch.dir/Song.cpp.o"
+  "CMakeFiles/musiXmatch.dir/Songs.cpp.o"
   "musiXmatch.pdb"
-  "musiXmatch.exe"
-  "musiXmatch.exe.manifest"
-  "libmusiXmatch.dll.a"
+  "musiXmatch"
 )
 
 # Per-language clean rules from dependency scanning.
