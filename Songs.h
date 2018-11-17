@@ -47,34 +47,58 @@ public:
      * @post la Song amb el tid de l'MSD o de l'mXm a aquesta classe s'ha esborrat; diu si s'ha eliminat correctament
      *
      * @param id
-     * @return
+     * @return Si s s'ha suprimit exitosament a la llista de paraules
      */
     bool deleteSong(const std::string id);
 
+    /**@brief Afegeix la cançó amb l's indicat per paràmetre
+     * @pre cert
+     * @post s s'ha afegit a la última posició de la llista de paraules
+     *
+     * @param s String per afegir a la llista de paraules. Es correspón a una paraula
+     */
     void addWord(const std::string s);
-    //Pre: --
-    //Post: s has been added as the last word in the list of words.
 
+    /**@brief En cas d'existir la cançó amb l'id passat per paràmetre retorna un shared pointer a aquesta, en cas contrari retorna nullptr
+     * @pre cert
+     * @post Si hi ha una canço amb el id igual que el paràmetre retorna un shared pointer que apunta a aquesta cançó, altrament retorna nullptr
+     *
+     * @param id Id de la cançó que es vol obtenir
+     * @return shared pointer en cas de que id es correspongui amb una id de la llista de cançons, nullptr altrament
+     */
     std::shared_ptr<Song> getSong(const std::string id) const;
-    //Pre: --
-    //Post: if there is a song (tid == id) or (mXm_tid == id) in this set then  returns a pointer to this song; otherwise it returns nullptr.
 
+    /**@brief Donada una paraula entrada per paràmetre busca totes les cançons que contenen aquesta paraula i retornen en forma de pair el nom de l'artista i el títol de la cançó
+     * @pre cert
+     * @post retorna una llista de pairs <nom de l'artista, títol de la cançó> que contenen la paraula w entrada per paràmetre
+     *
+     * @param w Paraula per buscar si les cançons la contenen
+     * @return Un set de pairs <nom de l'artista, títol de la cançó> que contenen la paraula entrada per paràmetre
+     */
     std::set<std::pair<std::string, std::string>> songsWithWord(std::string w) const;
-    //Pre: --
-    //Post: returns the set of pairs <mXm_artist_name, mXm_title> of songs with word w.
 
+    /**@brief Retorna la paraula més freqüent de la cançó i en cas d'empat una llista de les més freqüents
+     * @pre cert
+     * @post si hi ha una cançó la cual el seu tid de mXm o bé de MSD es correspongui amb id, retorna una llista de la o en cas d'empat de les paraules més freqüents
+     *
+     * @param id id de la cançó que pot correspondre a l'MSD o a l'mXm
+     * @return una o una llista de les paraules més freqüents de la cançó amb l aid passada per paràmetre
+     */
     std::list<std::string> mostFrequentWordsIn(const std::string id) const;
-    //Pre: --
-    //Post: if there is a song (tid == id) or (mXm_tid == id) in this set then returns the list of its most frequent words; otherwise it returns an empty list
 
+    /**@brief Retorna les n paraules més freqüents d'aquesta cançó
+     * @pre cert
+     * @post Retorna les n paraules més freqüents d'aquesta cançó
+     *
+     * @param n Nombre de paraules que es desitja retornar d'una cançó
+     * @return Les n paraules més freqïents d'aquesta cançó
+     */
     std::set<std::string> mostFrequentN(ushort n) const;
-    //Pre: --
-    // Post: the song with (tid == id) or (mXm_tid == id) in this set has been deleted; says if it succeeded
 
 private:
 
-    std::map<std::pair<std::string, std::string>, std::shared_ptr<Song> > _song;
-    std::vector<std::string> frequentWords;
+    std::map<std::pair<std::string, std::string>, std::shared_ptr<Song> > _song; ///map indexat per una parella dels índexs de mXm o bé de MSD. per valor té un shared pointer a la cançó corresponent
+    std::vector<std::string> frequentWords; ///vector de posicions amb totes les paraules freqüents de les cançons
 
 };
 
