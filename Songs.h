@@ -51,7 +51,7 @@ public:
      */
     bool deleteSong(const std::string id);
 
-    /**@brief Afegeix la cançó amb l's indicat per paràmetre
+    /**@brief Afegeix la paraula amb l's indicat per paràmetre
      * @pre cert
      * @post s s'ha afegit a la última posició de la llista de paraules
      *
@@ -97,7 +97,8 @@ public:
 
 private:
 
-    std::map<std::pair<std::string, std::string>, std::shared_ptr<Song> > _song; ///map indexat per una parella dels índexs de mXm o bé de MSD. per valor té un shared pointer a la cançó corresponent
+    std::map<std::string, std::shared_ptr<Song> > _song_mXm; ///map indexat per índex de mXm. per valor té un shared pointer a la cançó corresponent
+    std::map<std::string, std::shared_ptr<Song> > _song_MSD; ///map indexat per índex de mXm. per valor té un shared pointer a la cançó corresponent
     std::vector<std::string> frequentWords; ///vector de posicions amb totes les paraules freqüents de les cançons
 
 };

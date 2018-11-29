@@ -67,11 +67,11 @@ void Song::show() {
     std::cout << "tid_MSD: " << tid_MSD << std::endl;
     std::cout << "name_MSD: " << name_MSD << std::endl;
     std::cout << "title_MSD: " << title_MSD << std::endl;
-    std::cout << "Llista: " << std::endl;
-    for (auto& word : words_MAP)
+
+    /*for (auto &word : words_MAP)
     {
-        std::cout << "(" << word.first << "-" << word.second << ") ";
-    }
+        std::cout << "(" << word.first << " - " << word.second << ") " << std::endl;
+    }*/
 }
 
 const std::string &Song::getTid_MSD() const {

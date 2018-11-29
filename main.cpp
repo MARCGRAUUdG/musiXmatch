@@ -4,60 +4,68 @@
 #include <regex>
 #include <string>
 #include <fstream>
+#include <sstream>
+#include <algorithm>
 
 using std::regex;
 using std::string;
 using std::sregex_token_iterator;
 
-#include "Song.h"
 #include "Songs.h"
 
 typedef unsigned short ushort;
 
-void buscarMSD(Song& s, std::ifstream& fs_MSD)
+void llegirMSD(Songs& as, std::ifstream& fs_MSD)
 {
     regex reMSD("<SEP>");
-    std::string canco;
-    getline(fs_MSD, canco);
-    bool trobat = false;
+    std::string canco, tid, ign;
+    std::getline(fs_MSD, tid, '<');
+    std::shared_ptr<Song> s_it;
 
-    while (canco != "" && !trobat)
+    while (tid != "")
     {
-        sregex_token_iterator it(canco.begin(), canco.end(), reMSD, -1);
-        sregex_token_iterator reg_end;
-        if (it->str().front() != '#')
+        if (tid[0] != '#')
         {
-            if (it->str() == s.getTid_MSD())
+            s_it = as.getSong(tid);
+            if (s_it != nullptr)
             {
-                ++it; //Passem tid_MSD
-                s.setName_MSD(it->str()); ++it;
-                s.setTitle_MSD(it->str()); ++it;
+                std::getline(fs_MSD, canco);
+                sregex_token_iterator it(canco.begin(), canco.end(), reMSD, -1);
+                sregex_token_iterator reg_end;
+
+                s_it->setName_MSD(it->str().erase(0,4)); ++it;
+                s_it->setTitle_MSD(it->str()); ++it;
 
 
                 ++it; //Passem tid_mXm
-                s.setName_mXm(it->str()); ++it;
-                s.setTitle_mXm(it->str()); ++it;
-                trobat = true;
+                s_it->setName_mXm(it->str()); ++it;
+                s_it->setTitle_mXm(it->str()); ++it;
+
+                s_it->show();
+
+                s_it.reset();
             }
         }
-        std::getline(fs_MSD, canco);
+        fs_MSD.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
+        std::getline(fs_MSD, tid, '<');
     }
 }
 
-void llegirmXm(std::set<Song>& song_SET, Songs allSongs, std::ifstream& fs_mXm, std::ifstream& fs_MSD)
+void llegirmXm(std::set<Song>& song_SET, Songs& allSongs, std::ifstream& fs_mXm)
 {
-    bool readFrequent = false, emplenar_MSD = false;
-    regex re(",|%|:");
+    bool readFrequent = false;
+    regex re(",|%");
     string lletra;
     getline(fs_mXm, lletra);
-    Song s;
+    std::string tid_MSD, tid_mXm;
+    ushort idx, cnt;
+    std::shared_ptr<Song> s;
 
     while (lletra != "")
     {
-        std::string tid_mXm, tid_MSD;
-        ushort idx, cnt;
         sregex_token_iterator it(lletra.begin(), lletra.end(), re, -1);
         sregex_token_iterator reg_end;
+
         if (it->str().front() != '#')
         {
             if (readFrequent == false)
@@ -69,50 +77,50 @@ void llegirmXm(std::set<Song>& song_SET, Songs allSongs, std::ifstream& fs_mXm, 
             }
             else
             {
-                emplenar_MSD = true;
                 bool esIndex = true, llegirid = true;
                 for (; it != reg_end; ++it) {
-                    std::stringstream ss(it->str());
                     if (llegirid)
                     {
                         tid_MSD = it->str();
                         ++it;
                         tid_mXm = it->str();
-                        s = Song(tid_MSD, "", "", tid_mXm, "", "");
+                        s = allSongs.addSong(tid_MSD, "", "", tid_mXm, "", "");
                         llegirid = false;
                     }
                     else if (esIndex)
                     {
-                        ss >> idx;
+                        idx = atoi(it->str().c_str());
                         esIndex = false;
                     }
                     else
                     {
-                        ss >> cnt;
-                        s.addWord(idx,cnt);
+                        cnt = atoi(it->str().c_str());
+                        s->addWord(idx,cnt);
                         esIndex = true;
                     }
                 }
-                s.show();
+                //s->show();
             }
         }
-        if (emplenar_MSD == true)
-        {
-            buscarMSD(s, fs_MSD);
-            s.show();
-            emplenar_MSD = false;
-        }
+        s.reset();
         getline(fs_mXm, lletra);
     }
+    std::cout << "He acabat de llegir el primer fitxer!" << std::endl;
 }
 
 int main() {
     std::set<Song> song_SET;
     Songs allSongs;
+    std::string trainName, matchesName;
+
+    //std::getline(std::cin, trainName);
     std::ifstream fs_mXm("train.txt");
+    //std::getline(std::cin, matchesName);
     std::ifstream fs_MSD("matches.txt");
 
-    llegirmXm(song_SET, allSongs, fs_mXm, fs_MSD);
+    llegirmXm(song_SET, allSongs, fs_mXm);
+
+    llegirMSD(allSongs, fs_MSD);
 
     fs_mXm.close(); fs_MSD.close();
 
