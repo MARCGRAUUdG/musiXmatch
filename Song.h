@@ -133,6 +133,8 @@ public:
      */
     void setTitle_mXm(const std::string &title_mXm);
 
+    const std::map<ushort, ushort> &getWords_MAP() const;
+
 private:
 
     std::string tid_MSD; ///id de la Song corresponent al MSD

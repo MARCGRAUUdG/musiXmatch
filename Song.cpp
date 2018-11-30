@@ -54,7 +54,7 @@ std::list<Song::ushort> Song::mostFrequentWordIdxs() const {
         if (word3.second == cntMax)
         {
             indices.push_back(word3.first);
-            }
+        }
     }
     return indices;
 }
@@ -68,10 +68,6 @@ void Song::show() {
     std::cout << "name_MSD: " << name_MSD << std::endl;
     std::cout << "title_MSD: " << title_MSD << std::endl;
 
-    /*for (auto &word : words_MAP)
-    {
-        std::cout << "(" << word.first << " - " << word.second << ") " << std::endl;
-    }*/
 }
 
 const std::string &Song::getTid_MSD() const {
@@ -112,6 +108,10 @@ void Song::setName_mXm(const std::string &name_mXm) {
 
 void Song::setTitle_mXm(const std::string &title_mXm) {
     Song::title_mXm = title_mXm;
+}
+
+const std::map<ushort, ushort> &Song::getWords_MAP() const {
+    return words_MAP;
 }
 
 

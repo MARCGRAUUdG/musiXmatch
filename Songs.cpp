@@ -18,7 +18,34 @@ Songs::addSong(const std::string tid, const std::string MSD_artist_name, const s
 }
 
 bool Songs::deleteSong(const std::string id) {
-    return false;
+    auto it = _song_MSD.find(id);
+
+    if (it == _song_MSD.end())
+    {
+        it = _song_mXm.find(id);
+        if (it == _song_mXm.end())
+        {
+            return false;
+        }
+        else
+        {
+            std::string idAux;
+            idAux = it->second->getTid_MSD();
+            auto itAux = _song_MSD.find(idAux);
+            _song_MSD.erase(itAux);
+            _song_mXm.erase(it);
+            return true;
+        }
+    }
+    else
+    {
+        std::string idAux;
+        idAux = it->second->getTid_mXm();
+        auto itAux = _song_mXm.find(idAux);
+        _song_mXm.erase(itAux);
+        _song_MSD.erase(it);
+        return true;
+    }
 }
 
 void Songs::addWord(const std::string s) {
@@ -50,13 +77,100 @@ std::shared_ptr<Song> Songs::getSong(const std::string id) const {
 }
 
 std::set<std::pair<std::string, std::string>> Songs::songsWithWord(std::string w) const {
-    return std::set<std::pair<std::string, std::string>>();
+    std::set<std::pair<std::string, std::string> > setSong;
+    bool trobat;
+    int i=1, index;
+    while (i < frequentWords.size() && !trobat)
+    {
+        if (frequentWords[i] == w)
+        {
+            index = i;
+            trobat = true;
+        }
+        i++;
+    }
+
+    for (auto &song : _song_MSD)
+    {
+        for (auto &word : song.second->getWords_MAP())
+        {
+            if (word.first == index)
+            {
+                setSong.insert(std::make_pair(song.second->getName_mXm(), song.second->getTitle_mXm()));
+            }
+        }
+    }
+    return setSong;
 }
 
 std::list<std::string> Songs::mostFrequentWordsIn(const std::string id) const {
-    return std::list<std::string>();
+    std::list<std::string> mfw;
+    std::list<ushort> mfi;
+
+    auto it = _song_MSD.find(id);
+
+    if (it == _song_MSD.end())
+    {
+        it = _song_mXm.find(id);
+        if (it != _song_mXm.end())
+        {
+            mfi = it->second->mostFrequentWordIdxs();
+            for (auto & index : mfi)
+            {
+                mfw.push_back(frequentWords[index]);
+            }
+        }
+    }
+    else
+    {
+        mfi = it->second->mostFrequentWordIdxs();
+        for (auto & index : mfi)
+        {
+            mfw.push_back(frequentWords[index]);
+        }
+    }
+    return mfw;
 }
 
 std::set<std::string> Songs::mostFrequentN(Songs::ushort n) const {
-    return std::set<std::string>();
+    std::vector<int> cnTotal;
+    std::set<std::string> result;
+    cnTotal.resize(frequentWords.size());
+
+    for (int i = 1; i <= frequentWords.size(); i++)
+    {
+        cnTotal[i] = 0;
+    }
+
+    for (auto &song : _song_MSD)
+    {
+        for (auto &word : song.second->getWords_MAP())
+        {
+            cnTotal[word.first] += word.second;
+        }
+    }
+
+    int apuntades = 0;
+    while (apuntades < n)
+    {
+        int cntMax = 0;
+        for (auto &cnt : cnTotal)
+        {
+            if (cnt >= cntMax)
+            {
+                cntMax = cnt;
+            }
+        }
+        for (int i = 1; i<=cnTotal.size(); i++)
+        {
+            if (cntMax == cnTotal[i])
+            {
+                result.insert(frequentWords[i]);
+                cnTotal[i] = 0;
+                apuntades++;
+            }
+        }
+    }
+
+    return result;
 }
