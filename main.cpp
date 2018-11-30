@@ -1,3 +1,9 @@
+/** @file main.cpp
+ * @brief Programa principal. Aquest llegeix els dos fitxers seqüencialment i guarda la informació de les
+ * cançons a una estructura de dades. A partir d'aquí l'usuari entra vàries consultes i aquest mostrarà la
+ * informació per pantalla fins que l'usuari entri un '*' com a acabament del programa.
+ */
+
 #include <iostream>
 #include <map>
 #include <vector>
@@ -17,24 +23,25 @@ typedef unsigned short ushort;
 
 void llegirMSD(Songs& as, std::ifstream& fs_MSD)
 {
+    //Pre: cert
+    //Post: Llegeix i actualitza les dades del segon fitxer
     regex reMSD("<SEP>");
-    std::string canco, tid, ign;
-    std::getline(fs_MSD, tid, '<');
+    std::string canco, ign;
+    std::getline(fs_MSD, canco);
     std::shared_ptr<Song> s_it;
 
     std::cout << "Reading second file ... " << std::endl;
 
-    while (tid != "")
+    while (!fs_MSD.eof())
     {
-        if (tid[0] != '#')
+        sregex_token_iterator it(canco.begin(), canco.end(), reMSD, -1);
+        sregex_token_iterator reg_end;
+        if (canco[0] != '#')
         {
-            s_it = as.getSong(tid);
+            s_it = as.getSong(it->str());
             if (s_it != nullptr)
             {
-                std::getline(fs_MSD, canco);
-                sregex_token_iterator it(canco.begin(), canco.end(), reMSD, -1);
-                sregex_token_iterator reg_end;
-
+                ++it;
                 s_it->setName_MSD(it->str().erase(0,4)); ++it;
                 s_it->setTitle_MSD(it->str()); ++it;
 
@@ -48,14 +55,15 @@ void llegirMSD(Songs& as, std::ifstream& fs_MSD)
                 s_it.reset();
             }
         }
-        fs_MSD.ignore(std::numeric_limits<std::streamsize>::max(),'\n');
-        std::getline(fs_MSD, tid, '<');
+        std::getline(fs_MSD, canco);
     }
     std::cout << "DONE!" << std::endl;
 }
 
 void llegirmXm(std::set<Song>& song_SET, Songs& allSongs, std::ifstream& fs_mXm)
 {
+    //Pre: cert
+    //Post: Llegeix i actualitza les dades del primer fitxer
     bool readFrequent = false;
     regex re(",|%|:");
     string lletra;
@@ -66,7 +74,7 @@ void llegirmXm(std::set<Song>& song_SET, Songs& allSongs, std::ifstream& fs_mXm)
 
     std::cout << "Reading first file ... " << std::endl;
 
-    while (lletra != "")
+    while (!fs_mXm.eof())
     {
         sregex_token_iterator it(lletra.begin(), lletra.end(), re, -1);
         sregex_token_iterator reg_end;
@@ -115,9 +123,11 @@ void llegirmXm(std::set<Song>& song_SET, Songs& allSongs, std::ifstream& fs_mXm)
 
 void get(Songs allSongs)
 {
+    //Pre: cert
+    //Post: Donar t´ıtol i autor d’una can¸c´o (que aparegui al 1r fitxer) a partir de qualsevol dels seus
+    //dos codis identificadors.
     std::string id;
     std::cin >> id;
-    std::cout << id << std::endl;
     std::shared_ptr<Song> ps = allSongs.getSong(id);
     if (ps != nullptr)
     {
@@ -131,6 +141,8 @@ void get(Songs allSongs)
 
 void del(Songs &allSongs)
 {
+    //Pre; cert
+    //Post: Esborrar una can¸c´o a partir de qualsevol dels seus dos codis.
     bool esborrat;
     std::string id;
     std::cin >> id;
@@ -141,12 +153,15 @@ void del(Songs &allSongs)
     }
     else
     {
-        std::cout << "Song not found" << std::endl;
+        std::cout << "[" << id << "] NOT FOUND" << std::endl;
     }
 }
 
 void where(Songs allSongs)
 {
+    //Pre: cert
+    //Post: Dir en quines can¸cons apareix una paraula determinada (de la llista de paraules del 1r
+    //fitxer). Donar llista amb artista i can¸c´o, ordenada per ordre alfab`etic.
     std::string word;
     std::cin >> word;
     std::cin >> word;
@@ -156,10 +171,7 @@ void where(Songs allSongs)
         std::cout << "Word [" << word << "] occurs in " << songsWith.size() << " songs: " <<  std::endl;
         for (auto &song : songsWith)
         {
-            if (song.first != "" && song.second != "")
-            {
-                std::cout << song.first << " - " << song.second << std::endl;
-            }
+            std::cout << song.first << " - " << song.second << std::endl;
         }
     }
     else
@@ -170,6 +182,9 @@ void where(Songs allSongs)
 
 void most(Songs allSongs)
 {
+    //Pre: cert
+    //Post: Dir quina ´es la paraula que apareix m´es vegades en una can¸c´o determinada (a partir de
+    //qualsevol dels seus dos codis). En cas d’empat donar-les totes, en qualsevol ordre.
     std::string song;
     std::cin >> song;
     std::cin >> song;
@@ -177,15 +192,26 @@ void most(Songs allSongs)
     std::cin >> song;
 
     std::list<std::string> freqW = allSongs.mostFrequentWordsIn(song);
-    std::cout << "The most frequent words in song [" << song << "] are: " << std::endl;
-    for (auto &word : freqW)
+    if (freqW.size() != 0)
     {
-        std::cout << word << std::endl;
+        std::cout << "The most frequent words in song [" << song << "] are: " << std::endl;
+        for (auto &word : freqW)
+        {
+            std::cout << word << std::endl;
+        }
     }
+    else
+    {
+        std::cout << "Ups! Song [" << song << "] NOT FOUND" << std::endl;
+    }
+
 }
 
 void list(Songs allSongs)
 {
+    //Pre: cert
+    //Post: Llistar les n paraules m´es freq¨uents en el conjunt de can¸cons, en ordre alfab`etic. Nota:
+    //en cas d’empat llistar-les totes.
     int n;
     std::string str;
     std::cin >> str;
@@ -202,6 +228,8 @@ void list(Songs allSongs)
 
 void demanarOpcions(Songs allSongs)
 {
+    //Pre: cert
+    //Post: crida la opció desitjada; * per acabar
     std::string opcio;
     std::cout << "Entra opcions: " << std::endl;
     std::cin >> opcio;
@@ -223,10 +251,10 @@ int main() {
     Songs allSongs;
     std::string trainName, matchesName;
 
-    //std::getline(std::cin, trainName);
-    std::ifstream fs_mXm("test.txt");
-    //std::getline(std::cin, matchesName);
-    std::ifstream fs_MSD("matches.txt");
+    std::getline(std::cin, trainName);
+    std::ifstream fs_mXm(trainName);
+    std::getline(std::cin, matchesName);
+    std::ifstream fs_MSD(matchesName);
 
     llegirmXm(song_SET, allSongs, fs_mXm);
 

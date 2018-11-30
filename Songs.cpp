@@ -78,8 +78,8 @@ std::shared_ptr<Song> Songs::getSong(const std::string id) const {
 
 std::set<std::pair<std::string, std::string>> Songs::songsWithWord(std::string w) const {
     std::set<std::pair<std::string, std::string> > setSong;
-    bool trobat;
-    int i=1, index;
+    bool trobat = false;
+    int i=1, index = 0;
     while (i < frequentWords.size() && !trobat)
     {
         if (frequentWords[i] == w)
@@ -92,12 +92,16 @@ std::set<std::pair<std::string, std::string>> Songs::songsWithWord(std::string w
 
     for (auto &song : _song_MSD)
     {
-        for (auto &word : song.second->getWords_MAP())
+        bool trobat = false;
+        auto it = song.second->getWords_MAP().begin();
+        while (it != song.second->getWords_MAP().end() && !trobat)
         {
-            if (word.first == index)
+            if (it->first == index)
             {
                 setSong.insert(std::make_pair(song.second->getName_mXm(), song.second->getTitle_mXm()));
+                trobat=true;
             }
+            it++;
         }
     }
     return setSong;
